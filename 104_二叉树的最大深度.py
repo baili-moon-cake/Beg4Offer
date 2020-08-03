@@ -7,3 +7,10 @@
 
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
+        def calDepthRecursively(root:TreeNode) -> int:
+            if root is None:
+                return 0
+            return max(calDepthRecursively(root.left),calDepthRecursively(root.right))+1
+        return calDepthRecursively(root)
+
+
