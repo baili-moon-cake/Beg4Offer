@@ -13,4 +13,3 @@ class Solution:
             return max(calDepthRecursively(root.left),calDepthRecursively(root.right))+1
         return calDepthRecursively(root)
 
-
