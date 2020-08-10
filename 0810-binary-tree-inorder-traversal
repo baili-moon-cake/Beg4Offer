@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ 
+ 思路：每到一个节点 A，因为根的访问在中间，将 A 入栈。然后遍历左子树，接着访问 A，最后遍历右子树。
+
+在访问完 A 后，A 就可以出栈了。因为 A 和其左子树都已经访问完成。
+
+思路：
+
+栈S;
+p= root;
+while(p || S不空){
+    while(p){
+        p入S;
+        p = p的左子树;
+    }
+    p = S.top 出栈;
+    访问p;
+    p = p的右子树;
+}
+ */
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> s;
+        vector<int> res;
+        TreeNode* p = root;
+        while(!s.empty() || p){
+            while(p){
+                s.push(p);
+                p=p->left;
+            }
+            p=s.top();
+            s.pop();
+            res.push_back(p->val);
+            p=p->right;
+        }
+        return res;
+    }
+};
