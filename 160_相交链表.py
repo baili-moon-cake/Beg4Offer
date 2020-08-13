@@ -16,8 +16,8 @@ class Solution:
             if pointB:
                 lengthB+=1
                 pointB = pointB.next
-        fast, slow = (headA, headB) if headB.next else (headB, headA)
-        for i in range(diff):
+        fast, slow = (headA, headB) if lengthA>=lengthB else (headB, headA)
+        for i in range(abs(lengthA-lengthB)):
             fast = fast.next
         while(fast and slow):
             if fast == slow:
