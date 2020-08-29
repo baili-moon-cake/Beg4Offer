@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        int num = 0;
+        string curr = "";
+        stack<int> numstack;
+        stack<string> strstack;
+        for(int i = 0; i < s.size(); i++){
+            if((s[i]>='a' && s[i]<='z') || s[i]>='A' && s[i]<='Z'){
+                curr+=s[i];
+            }
+            else if(s[i]>='0' && s[i]<='9'){
+                num = 10*num+s[i]-'0';
+            }
+            else if(s[i]=='['){
+                numstack.push(num);
+                strstack.push(curr);
+                num=0;
+                curr="";
+            }
+            else if(s[i]==']'){
+                for(int k=0;k<numstack.top();k++){
+                    strstack.top()+=curr;
+                }
+                numstack.pop();
+                curr=strstack.top();
+                strstack.pop();
+            }
+        }
+        return curr;
+    }
+};
