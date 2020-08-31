@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int res = 0;
+        stack<int> s_row;
+        stack<int> s_col; 
+        for(int i = 0; i < grid.size(); i++){
+            for(int j = 0; j < grid[0].size(); j++){
+                if(grid[i][j] == '0') continue;
+
+                res += 1;
+                s_row.push(i);
+                s_col.push(j);
+
+                while(!s_row.empty()){
+                    int temp_i = s_row.top();
+                    int temp_j = s_col.top();
+                    s_row.pop();
+                    s_col.pop();
+                    grid[temp_i][temp_j] = '0';
+                    if(temp_i - 1 >= 0 && grid[temp_i-1][temp_j] == '1') {
+                        s_row.push(temp_i-1);
+                        s_col.push(temp_j);
+                        grid[temp_i-1][temp_j] = '0';
+                    }
+                    if(temp_i + 1 < grid.size() && grid[temp_i+1][temp_j] == '1') {
+                        s_row.push(temp_i+1);
+                        s_col.push(temp_j);
+                        grid[temp_i+1][temp_j] = '0';
+                    }
+                    if(temp_j - 1 >= 0 && grid[temp_i][temp_j-1] == '1') {
+                        s_row.push(temp_i);
+                        s_col.push(temp_j-1);
+                        grid[temp_i][temp_j-1] = '0';
+                    }
+                    if(temp_j + 1 < grid[0].size() && grid[temp_i][temp_j+1] == '1') {
+                        s_row.push(temp_i);
+                        s_col.push(temp_j+1);
+                        grid[temp_i][temp_j+1] = '0';
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
