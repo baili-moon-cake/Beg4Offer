@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int s = 0;
+        for(auto num : nums){
+            s ^= num;
+        }
+        int k = s & (-s); //保留最后一个1
+        int s2 = 0;
+        for(auto num : nums){
+            if(num & k){ // 注意
+                s2 ^= num;
+            }
+        }
+        vector<int> res(2, 0);
+        res[0] = s2;
+        res[1] = s2 ^ s;
+        return res;
+    }
+};
