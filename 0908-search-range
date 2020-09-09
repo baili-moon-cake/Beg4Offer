@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int findFirstPosition(vector<int> &nums, int target) { //第一个=t的位置
+        int size = nums.size();
+        int left = 0;
+        int right = size - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] == target){
+                right = mid;
+            } else {
+                // nums[mid] > target
+                right = mid - 1;
+            }
+        }
+        if (nums[left] != target) {
+            return -1;
+        }
+        return left;
+    }
+    int findLastPosition(vector<int> &nums, int target) { //第一个=t的位置
+        int size = nums.size();
+        int left = 0;
+        int right = size - 1;
+        while (left < right) {
+            int mid = left + (right - left + 1) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] == target){
+                left = mid;
+            } else {
+                // nums[mid] > target
+                right = mid - 1;
+            }
+        }
+        if (nums[left] != target) {
+            return -1;
+        }
+        return left;
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int size = nums.size();
+        if (size == 0) {
+            return {-1, -1};
+        }
+        int fitstPosition = findFirstPosition(nums, target);
+
+        if (fitstPosition == -1) {
+            return {-1, -1};
+        }
+        int lastPosition = findLastPosition(nums, target);
+        return {fitstPosition, lastPosition}; //区别在于当左右紧靠的时候，mid的取法要偏左还是偏右
+
+    }
+};
