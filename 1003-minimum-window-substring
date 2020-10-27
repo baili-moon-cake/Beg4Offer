@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char, int> count; //记录没有被包进来的漏网之鱼
+        for(auto c : t) count[c]++;
+        int len = 0, min_len = s.size();
+        int left = 0, right = 0;
+        string res = "";
+        for(; right<s.size(); right++){
+            count[s[right]]--;
+            if(count[s[right]]>=0) len++; //被减掉还>=0，说明该char在t中出现，覆盖长度+1
+            //不满足while条件，就继续往右移动
+            while(len==t.size()){ //已经有一个可行解，t中字符<=0，不在t中字符为负数
+                if(right-left+1 <= min_len){
+                    min_len=right-left+1;
+                    res = s.substr(left, right-left+1);
+                }
+                count[s[left]]++;
+                if(count[s[left]] > 0) len--; //不仅补到了0，还多了，出现了漏网之鱼
+                left++; //右移动完成
+            }
+        }
+        return res;
+    }
+};
