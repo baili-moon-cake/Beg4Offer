@@ -1,0 +1,18 @@
+/*
+方法3: 鸽巢原理，因为出现的元素值 < nums.size(); 所以我们可以将见到的元素 放到索引的位置，如果交换时，发现索引处已存在该元素，则重复 O(N) 空间O(1)
+*/
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        for(int i = 0; i < nums.size(); i++){
+            while(nums[i] != i){ //没有归位就一直交换,nums[i]放到正确位置上
+                if(nums[i] == nums[nums[i]]) return nums[i];//num[i]正确位置已经有人了
+                //i 和 nums[i]，要用temp作为索引
+                int temp = nums[i];
+                nums[i] = nums[temp];
+                nums[temp] = temp;
+            }
+        }
+        return -1;
+    }
+};
