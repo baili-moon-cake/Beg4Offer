@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        res.push_back(temp);
+        for(auto num : nums){
+            int len = res.size();
+            for(int i = 0; i < len; i++){
+                auto r = res[i];
+                r.push_back(num);
+                res.push_back(r);
+            }
+        }
+        return res;
+    }
+};
