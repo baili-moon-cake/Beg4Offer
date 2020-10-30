@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string replaceSpace(string s) {
+        if(s.empty()) return s;
+        int count = 0, length = s.size();
+        for(auto c : s){
+            if(c == ' ') count++;
+        }
+        int new_size = count*2 + length;
+        s.resize(new_size);
+        int j = new_size-1;
+        for(int i = length-1; i--; i>=0){
+            if(s[i]!=' '){
+                s[j--] = s[i];
+            }
+            else{
+                s[j--] = '0';
+                s[j--] = '2';
+                s[j--] = '%';
+            }
+        }
+        return s;
+    }
+};
