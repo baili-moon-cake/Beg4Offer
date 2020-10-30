@@ -1,0 +1,24 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return build(preorder, inorder, 0, 0, inorder.size()-1);
+    }
+    TreeNode* build(vector<int>& preorder, vector<int>& inorder, int root, int start, int end){// 中序的start和end, root是另外一个序列的
+        if(start > end) return nullptr;
+        TreeNode* tree = new TreeNode(preorder[root]);
+        int i = start;
+        while(i<end && inorder[i] != preorder[root]) i++; //找到分界点
+        tree->left = build(preorder, inorder, root+1, start, i-1);
+        tree->right = build(preorder, inorder, root+1+i-start, i+1, end);
+        return tree;
+    }
+};
