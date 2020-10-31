@@ -1,0 +1,41 @@
+/*
+任何大于1的数都可由2和3相加组成（根据奇偶证明）
+因为2*2=1*4，2*3>1*5, 所以将数字拆成2和3，能得到的积最大
+因为2*2*2<3*3, 所以3越多积越大 时间复杂度O(n/3)，用幂函数可以达到O(log(n/3)), 因为n不大，所以提升意义不大，我就没用。 空间复杂度常数复杂度O(1)
+*/
+class Solution {
+public:
+    int cuttingRope(int n) {
+        //先用3乘，再用2乘
+        if(n<=3) return n-1;
+        int sum = 1;
+        //剩下4，不能拆出3，这样就没有2了
+        while(n>=5){
+            sum*=3;
+            n-=3;
+        }
+        return sum*n; //余4就2*2=4，余3就不拆，余2也不拆 
+
+    }
+};
+
+//动态规划
+class Solution {
+public:
+    int cuttingRope(int n) {
+        if (n <= 3) return n-1;
+        vector<int> dp(n+1); //dp[n]为最终解
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 3;
+        for(int i = 4;i<=n;i++){ //分成两段，遍历一遍
+            int max_value = 0;
+            for(int j=1; j<=i/2; j++){//最低切出来1
+                max_value = max(max_value, dp[j]*dp[i-j]);
+            }
+            dp[i] = max_value;
+        }
+        return dp[n];
+
+    }
+};
