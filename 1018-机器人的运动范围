@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int movingCount(int m, int n, int k) {
+        vector<vector<bool>> visited(100, vector<bool> (100, false));
+        return helper(m,n,0,0,k, visited);
+    }
+    int helper(int m, int n, int i, int j, int k, vector<vector<bool>>& visited){ // i,j起点的解
+        if(i>=m || i<0 || j>=n || j<0 || i%10 + i/10 + j%10 + j/10 > k || visited[i][j]) return 0; //无解
+        visited[i][j]=true;
+        return 1+helper(m,n,i+1,j,k,visited)
+                +helper(m,n,i-1,j,k,visited)
+                +helper(m,n,i,j+1,k,visited)
+                +helper(m,n,i,j-1,k,visited);
+    }
+};
