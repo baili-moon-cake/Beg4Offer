@@ -1,0 +1,24 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return true;
+        return helper(root->left, root->right); //两个树是不是镜像
+    }
+    bool helper(TreeNode* left, TreeNode* right){
+        if(!left && !right) return true;
+        if(!left || !right) return false;
+        if(left->val!=right->val) return false;
+        //确定左右都不为空
+        return helper(left->left, right->right) && helper(left->right, right->left);
+    }
+
+};
