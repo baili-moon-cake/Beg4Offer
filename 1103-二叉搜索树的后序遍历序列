@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool verifyPostorder(vector<int>& postorder) {
+        if(postorder.empty()) return true;
+        return helper(postorder, 0, postorder.size()-1);
+    }
+    bool helper(vector<int>& postorder, int left, int right){
+        if(left >= right) return true; //考虑>的情况，k-1等会向左越界
+        int root_value = postorder[right];
+        int k = left;
+        while(postorder[k]<root_value && k<right) k++;
+        for(int i=k; i<right; i++){
+            if(postorder[i] < root_value) return false; // 进行判断后续的区域是否所有的值都是大于当前的根节点
+        } //检查完了
+        if(!helper(postorder, left, k-1)) return false;
+        if(!helper(postorder, k, right-1)) return false;
+        return true;
+    }
+};
