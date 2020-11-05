@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<string> permutation(string s) {
+        vector<string> res;
+        if(s.empty()) return res;
+        sort(s.begin(), s.end()); // 对字符串进行排序
+        vector<bool> visited(s.size(), false);
+        string track;
+        helper(res, s, track, visited);
+        return res;
+    }
+
+    /*
+     * 回溯函数
+     * 使用sort函数对字符串排序，使重复的字符相邻，
+     * 使用visit数组记录遍历决策树时每个节点的状态，
+     * 节点未遍历且相邻字符不是重复字符时，
+     * 则将该字符加入排列字符串中，依次递归遍历。
+     * */
+    void helper(vector<string>& res, string s, string& track, vector<bool>& visited){
+        //结束回溯
+        if(track.size() == s.size()){ //到达一个排列了
+            res.push_back(track);
+            return;
+        }
+        for(int i=0; i<s.size(); i++){
+            if(visited[i]) continue; //调过已经访问过的
+            if(i>0 && !visited[i-1] && s[i-1]==s[i]) continue; //上一个没访问过,且重复
+            
+            //选择
+            visited[i] = true;
+            track += s[i];
+            helper(res, s, track, visited);
+            track.pop_back();
+            visited[i]=false;
+        }
+    }
+};
