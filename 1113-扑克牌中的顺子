@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isStraight(vector<int>& nums) {
+        int count = 0, max_value = 0, min_value = 999;
+        map<int, int> m;
+        for(auto n:nums){
+            if(n==0) count++;
+            else{
+                if(m.find(n)==m.end()) m[n]=1;
+                else m[n]++;
+                if(m[n]>1) return false;//重复肯定不是
+                max_value=max(max_value,n);
+                min_value=min(min_value,n);
+            }
+        }
+        if(count==0) return max_value-min_value==4; //没有通配符，必须无重复差距为4
+        return max_value<=min_value+4;
+    }
+};
