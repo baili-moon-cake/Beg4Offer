@@ -1,0 +1,36 @@
+class MedianFinder {
+public:
+    /** initialize your data structure here. */
+    //
+    priority_queue<int,vector<int>,less<int>> leftQue; //大顶堆,保存较小的一半
+    priority_queue<int,vector<int>,greater<int>> rightQue; //小顶堆,保存较大的一半
+    MedianFinder() {
+    }
+    
+    void addNum(int num) {
+        if(leftQue.size()==rightQue.size()){
+            rightQue.push(num);
+            leftQue.push(rightQue.top()); //挤出一个小的，加到左边
+            rightQue.pop();
+        }
+        else{ //左边已经多1个了，加到左边，挤出大的放到右边
+            leftQue.push(num);
+            rightQue.push(leftQue.top());
+            leftQue.pop();
+        }
+    }
+    
+    double findMedian() {
+        if(leftQue.size()==rightQue.size()){
+            return (double)(leftQue.top()+rightQue.top())/2;
+        }
+        else return (double)leftQue.top();
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
