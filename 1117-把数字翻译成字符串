@@ -1,0 +1,9 @@
+class Solution {
+public:
+    int translateNum(int num) {
+        if(num<=9) return 1;
+        int temp = num%100; //从最后两位开始往前递推
+        if(temp<=9 || temp>25) return translateNum(num/10); //只有一种划分方式,但只扔掉一个，后面再看
+        return translateNum(num/10) + translateNum(num/100);
+    }
+};
