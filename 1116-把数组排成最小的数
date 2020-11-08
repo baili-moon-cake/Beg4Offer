@@ -1,0 +1,22 @@
+/*
+"6" < "305"，但是要把右边看做小的：3056<6350
+当sort函数在类内使用，并且定义comp函数也是类成员函数时，必须要在comp函数前加static，因为sort需要传入的参数是一个普通函数指针，而不是成员函数指针，所以需要在类成员定义前加static
+*/
+
+class Solution {
+public:
+    string minNumber(vector<int>& nums) {
+        vector<string> strs;
+        for(auto num:nums)
+            strs.push_back(to_string(num));
+        sort(strs.begin(),strs.end(),compare);
+        string res;
+        for(auto str:strs)
+            res+=str;
+        return res;
+    }
+
+    static bool compare(const string &a,const string &b) {
+        return a+b<b+a;
+    }
+};
