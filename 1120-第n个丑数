@@ -1,0 +1,23 @@
+// 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 是前 10 个丑数
+
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        if(n<=0) return 0;
+        vector<int> res(n,1);
+        int index2=0, index3=0, index5=0;
+        for(int i=1;i<n;i++){
+            res[i] = min(res[index2]*2, min(res[index3]*3, res[index5]*5));
+            // 看看是谁乘的
+            // 下面不用else if的原因是有可能id2(3) * 2 == id3(2) * 3
+            // 这种情况两个指针都要后移
+            if (res[index2] * 2 == res[i])
+                index2 += 1;
+            if (res[index3] * 3 == res[i])
+                index3 += 1;
+            if (res[index5] * 5 == res[i])
+                index5 += 1; 
+        }
+        return res[n-1];
+    }
+};
