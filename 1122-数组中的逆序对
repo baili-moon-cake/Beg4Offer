@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int count = 0;
+    int reversePairs(vector<int>& nums) {
+        merge_sort(nums, 0, nums.size()-1);
+        return count;
+    }
+    void merge_sort(vector<int>& nums, int left, int right){
+        if(left < right){
+            int mid = left + (right-left)/2;
+            merge_sort(nums, left, mid);
+            merge_sort(nums, mid+1, right);
+            merge(nums, left, mid, right);
+        }
+    }
+    void merge(vector<int>& nums, int left, int mid, int right){
+        vector<int> temp(right-left+1, 0);
+        int p1 = left, p2 = mid+1, p=0;
+        while(p1<=mid && p2<= right){
+            if(nums[p1]<=nums[p2]) temp[p++]=nums[p1++];
+            else {
+                temp[p++]=nums[p2++];
+                count += mid-p1+1; //左边p1（包含）到mid（包含）的所有，都会和右边的构成逆序对
+            }
+        }
+        while(p1<=mid) temp[p++]=nums[p1++];
+        while(p2<=right) temp[p++]=nums[p2++];
+        for(int i=left; i<=right; i++){
+            nums[i]=temp[i-left];
+        }
+    }
+
+};
