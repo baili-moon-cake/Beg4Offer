@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int left = 0, right = nums.size()-1;
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==mid){//说明左边一切正常
+                left = mid+1;
+            }
+            else right=mid; //不能减1，因为有可能是该位置
+        }
+        //有可能缺少最后n，这样根本找不到target，双指针会指向最右边，需要再检查一下
+        if(nums[left]==left && left==nums.size()-1) return left+1;
+        return left;
+    }
+};
