@@ -25,9 +25,7 @@ public:
         int count=0;
         while(!q.empty()){
             int currentNum = q.size();
-            vector<int> temp;
             for(int i = 0; i < currentNum; i++){
-                temp.push_back(q.front()->val);
                 if (q.front()->left) q.push(q.front()->left); // 特别注意null！！！
                 if (q.front()->right) q.push(q.front()->right);
                 q.pop();
