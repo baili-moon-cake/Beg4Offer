@@ -1,0 +1,22 @@
+/*当数组中只出现一次的那个数字(用k表示)在二进制的对应位为0时，
+该对应位为1在数组各个数字中出现的总次数应当为3n ，
+当k的对应位为1时，该对应位为1在数组各个数字中出现的总次数应当为 3n + 1 */
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        vector<int> count(32, 0);
+        for(auto num : nums){
+            for(int i=0; i<32; i++){
+                if((num & (1<<i)) != 0) //千万不要通过==1来判断，因为会有符号位，所以要通过是否为0来判断，切记！！！
+                    count[i] += 1;
+            }
+        }
+        int res=0;
+        for(int i=0; i<32; i++){
+            if((count[i]%3)!=0){
+                res += (1<<i);
+            }
+        }
+        return res;
+    }
+};
