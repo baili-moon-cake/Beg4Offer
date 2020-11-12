@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> singleNumbers(vector<int>& nums) {
+        int ret = 0;
+        for (int num : nums)
+            ret ^= num;
+        //取第几位为1，很关键
+        int k=1;
+        while((ret & k) == 0){ //要注意加括号
+            k<<=1; //细节！注意等号
+        }
+        vector<int> res(2, 0);
+        for(int num: nums){
+            if(num & k) res[0] ^= num;
+            else res[1] ^= num;
+        }
+        return res;
+    }
+};
