@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.empty()) return 0;
+        int n = prices.size();
+        vector<int> dp(n, 0); //以第i天卖出获得的最大利润,dp[0]=0
+        int min_value = prices[0];
+        for(int i=1; i<n; i++){
+            if(prices[i]<min_value) min_value=prices[i];
+            //第一次：dp[n] = max(dp[n-1], prices[i]-min(prices[1:i]));
+            dp[i] = max(dp[i-1], prices[i]-min_value); //第二次
+            //还可以再优化，不用dp数组，用一个数就行
+        }
+        return dp[n-1];
+    }
+};
