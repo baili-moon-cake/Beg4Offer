@@ -1,0 +1,30 @@
+//队列里的元素一定是要排序的，而且要最大值放在出队口
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        //判断特殊情况
+        vector<int> res;
+        int n = nums.size();
+        if(n < k || k <= 0) return res;
+
+        //滑动窗口的前后指针
+        int low =  1 - k,high = 0;
+        deque<int> dq;//双端队列
+        while(high < n){ //右边没顶到头
+            //每次开始循环的low 和 high都是新的滑窗
+            //判断滑窗的low端是否是最大的元素，是的话就过期了，弹出
+            if(low >= 1 && nums[low - 1] == dq[0]) dq.pop_front();
+
+            while(!dq.empty() && dq[dq.size()-1] < nums[high]) dq.pop_back();//小于nums[high]的元素出队，因为之前那些肯定被淘汰了。从后往前就行，因为队列是递减的
+
+            //此时的high指针进队
+            dq.push_back(nums[high]); //继续贴进去，因为每个都可能成为后续滑窗的最大值
+
+            if(low >= 0) res.push_back(dq[0]);//当low >= 0，滑窗已经形成
+            low ++;
+            high ++;
+        }
+        return res;
+    }
+};
