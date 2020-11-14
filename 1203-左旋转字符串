@@ -1,0 +1,10 @@
+//这种反转题目，不要一个一个移过去，考虑分段reverse
+class Solution {
+public:
+    string reverseLeftWords(string s, int n) {
+        reverse(s.begin(), s.begin()+n); //先把前面的k个翻转
+        reverse(s.begin()+n, s.end()); //再反转后面
+        reverse(s.begin(), s.end()); //最后整个反转
+        return s;
+    }
+};
