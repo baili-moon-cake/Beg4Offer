@@ -1,0 +1,26 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        if(s.empty()) return s;
+        int left = 0;
+        while(s[left]==' ') left++;
+        int right = s.size()-1;
+        while(s[right]==' ') right--;
+        if(left>right) return "";
+
+        int i=right, j=right;
+        vector<string> words;
+        while(i>=left){
+            while(i>=left && s[i]!=' ') i--;
+            words.push_back(s.substr(i+1,j-i));
+            while(i>=left && s[i]==' ')i--;
+            j=i;
+        }
+        string res;
+        for(int i=0; i<words.size(); i++){
+            res += words[i];
+            if(i!=words.size()-1) res += " ";
+        }
+        return res;
+    }
+};
