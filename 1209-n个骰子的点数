@@ -1,0 +1,31 @@
+/*这里假设一个dp[n][s]为骰子数为n，和为s的情况，出现的次数
+当有n个骰子时，点数从n取到6n
+
+当n = 1时，dp[1][s] = 1，其中s = 1,2,3,4,5,6。
+
+当n > 1时，dp[n][s] = dp[n-1][s-1]+dp[n-1][s-2]+dp[n-1][s-3]+dp[n-1][s-4]+dp[n-1][s-5]+dp[n-1][s-6]，其中s in [n, 6n]
+
+*/
+class Solution {
+public:
+    vector<double> dicesProbability(int n) {
+        vector<double> res;
+        vector<vector<int>> dp(n+1, vector<int>(6*n+1, 0));
+        for(int i=1; i<=6; i++){
+            dp[1][i]=1;
+        }
+        for(int i=2; i<=n; i++){
+            for(int j=i; j<=6*i; j++){
+                for(int k=1; k<=6; k++){
+                    if(j<=k) continue; //很关键，要不越界了 
+                    dp[i][j]+=dp[i-1][j-k]; //可以用一维数组优化
+                }
+            }
+        }
+        int total = pow(6, n);
+        for(int i=n; i<=6*n; i++){
+            res.push_back((double)dp[n][i]/total);
+        }
+        return res;
+    }
+};
