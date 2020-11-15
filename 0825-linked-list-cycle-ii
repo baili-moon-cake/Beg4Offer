@@ -6,24 +6,31 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+/*
+假设单程长度a，环长度b
+1.第一次相遇，slow = nb (f=2s, f-s=nb)
+2.a+nb = 入口点
+3.slow再走a = 入口 = head走到入口 = a
+4.由3得出，起始距离入口 = 第一次相遇位置 + a
+*/
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        if (!head) return NULL;
-        ListNode* low = head;
-        ListNode* fast = head;
+        if(!head) return nullptr;
+        ListNode* low=head, *fast=head;
         while(fast && fast->next){
             low=low->next;
             fast=fast->next->next;
-            if(low==fast) {
-                low = head;
+            if(low==fast){ //相遇，说明有环，该位置只要再走a步就是了
+                fast=head;
                 while(fast!=low){
                     fast=fast->next;
                     low=low->next;
                 }
-                return fast;
+                return low;
             }
         }
-        return NULL;
+        return nullptr;
     }
 };
