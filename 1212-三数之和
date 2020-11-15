@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        if(nums.size() < 3) return res;
+        sort(nums.begin(), nums.end());
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i]>0) return res; //结束了，后面没了
+            if(i>0 && nums[i]==nums[i-1]) continue; //排除重复
+            int left = i+1, right = nums.size()-1; //从最小开始往右找
+            //两数之和
+            while(left < right){
+                if(nums[i]+nums[left]+nums[right]==0){
+                    res.push_back({nums[i], nums[left], nums[right]});
+                    //排除重复
+                    while(left < right && nums[right]==nums[right-1]) right--;
+                    right--; //跳到新的位置，为下一次循环做准备
+                    while(left < right && nums[left]==nums[left+1]) left++;
+                    left++;
+                }
+                else if(nums[i]+nums[left]+nums[right]>0){
+                    right--;
+                }
+                else{
+                    left++;
+                }
+            }
+        }
+        return res;
+    }
+};
