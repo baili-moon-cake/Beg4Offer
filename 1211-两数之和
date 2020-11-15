@@ -1,0 +1,13 @@
+//使用哈希表，可以将寻找 target - x 的时间复杂度降低到从 O(N) 降低到 O(1)。
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int, int> m;
+        for(int i=0; i<nums.size(); i++){
+            auto it = m.find(target-nums[i]);
+            if(it==m.end()) m[nums[i]]=i;
+            else return {it->second, i};
+        }
+        return {};
+    }
+};
