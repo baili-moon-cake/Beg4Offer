@@ -1,4 +1,4 @@
-	void merge(vector<int>& nums, int l, int m, int r){
+    void merge(vector<int>& nums, int l, int m, int r){
         vector<int> tmp(r - l + 1);
         int i = l; // index for left subarray
         int j = m + 1; // index for right subarray
