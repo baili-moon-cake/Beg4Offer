@@ -18,8 +18,8 @@ public:
         int h = depth(root);
         return res;
     }
-    //先写好递归的高度函数，遍历每一个节点
-    int depth(TreeNode* root){ //以root为起点的最大高度，高度其实就是指针链路长度
+    //先写好递归函数，遍历每一个节点
+    int depth(TreeNode* root){ //以root为起点的最大(一条)链路长度
         //要递归，所以定义好边界
         if(!root) return 0;
         int left_depth = root->left? depth(root->left)+1 : 0; //注意，+1才表示包含了从root出发的指针
