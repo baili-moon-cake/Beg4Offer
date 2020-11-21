@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        if(nums.empty() || k <=0 || k > nums.size()) return 0;
+        int start = 0;
+        int end = nums.size()-1;
+        int index = partition(nums, start, end);
+        while(index != nums.size()-k){ //==的时候，算上inde位置就满足k个了
+            if(index<nums.size()-k){
+                start = index+1;
+            }
+            else{
+                end=index-1;
+            }
+            index = partition(nums, start, end);
+        }
+        return nums[index];
+    }
+    int partition(vector<int>& arr, int start, int end){
+        int pivot = arr[end];
+        int i = start;
+        for(int j=start; j<end; j++){
+            if(arr[j]<=pivot){
+                swap(arr[i],arr[j]);
+                i++;
+            }
+        }
+        swap(arr[i],arr[end]);
+        return i;
+    }
+};
