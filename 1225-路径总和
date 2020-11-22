@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> path;
+    vector<vector<int>> res;
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        dfs(root, sum);
+        return res;
+    }
+    void dfs(TreeNode* root, int sum){
+        if(!root) return; //边界判断
+        path.push_back(root->val);
+        if(root->val == sum && !root->left && !root->right){ //满足条件
+            res.push_back(path);
+            // path.pop_back(); 这两行有没有都行，总之就是弹出结束
+            // return;
+        }
+        dfs(root->left, sum-root->val);
+        dfs(root->right, sum-root->val);
+        path.pop_back();
+    }
+};
