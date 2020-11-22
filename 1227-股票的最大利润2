@@ -1,0 +1,12 @@
+//贪心算法，一次遍历，只要今天价格小于明天价格就在今天买入然后明天卖出，时间复杂度O(n)
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int res=0;
+        for(int i=0; i<prices.size()-1; i++){
+            res += max(0, prices[i+1]-prices[i]);
+        }
+        return res;
+    }
+};
