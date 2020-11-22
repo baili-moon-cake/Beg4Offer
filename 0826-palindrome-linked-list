@@ -30,3 +30,48 @@ public:
         return 1;
     }
 };
+
+
+//上面那个是顺带着把前半部分翻转了过来，下面这个是正常的先找中间slow，再翻转slow右边，再比较
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if(!head || !head->next) return true;
+        ListNode* slow = head, *fast = head;
+        while(fast && fast->next){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        if(fast) slow=slow->next; //整个链表有奇数个，slow需要再走一步
+        slow=reverse(slow);
+        while(slow){
+            if(head->val==slow->val){
+                head=head->next;
+                slow=slow->next;
+            }
+            else return false;
+        }
+        return true;
+    }
+    ListNode* reverse(ListNode* head){
+        if(!head || !head->next) return head;
+        ListNode* dummy = new ListNode(0);
+        dummy->next=head;
+        ListNode* cur = head;
+        while(cur && cur->next){
+            ListNode* right = cur->next;
+            cur->next = right->next;
+            right->next=dummy->next;
+            dummy->next=right;
+        }
+        return dummy->next;
+    }
+};
