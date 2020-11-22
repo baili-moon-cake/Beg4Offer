@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.size()<2) return s;
+        int n = s.size();
+        vector<vector<bool>> dp(n, vector<bool>(n, false)); //dp[i][j]表示[i,j]之间是否回文
+        for(int i=0; i<n; i++){
+            dp[i][i]=true;
+        }
+        int max_len = 0;
+        int start = 0;
+        //上三角形区域
+        for(int j=1; j<n; j++){
+            for(int i=0; i<j; i++){
+                if(s[i]==s[j]){
+                    if(i+1<j-1) dp[i][j]=dp[i+1][j-1];
+                    else dp[i][j]=true; //此时s[i]==s[j] && i=j-1，肯定是了
+                } //else 置false，原本就是了所以跳过节省时间
+                if(dp[i][j] && j-i+1>max_len){
+                    max_len=j-i+1;
+                    start=i;
+                }
+            }
+        }
+        if(max_len==0) max_len=1; //dp出来的全是false，只有对角线才有效，随便取一个就行
+        return s.substr(start,max_len);
+    }
+};
