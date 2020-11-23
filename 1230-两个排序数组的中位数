@@ -1,0 +1,29 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n1 = nums1.size();
+        int n2 = nums2.size();
+        int left = (n1+n2+1)/2;
+        int right = (n1+n2+2)/2;
+        return (find_kth(nums1, 0, nums2, 0, left) + find_kth(nums1, 0, nums2, 0, right)) / 2.0;
+    }
+
+    // i: nums1的起始下标 j: nums2的起始下标, k不是下标，就是实打实的第几个（当前）
+    double find_kth(vector<int>& nums1, int i, vector<int>& nums2, int j, int k){
+        if(i>=nums1.size()) return nums2[j+k-1];
+        if(j>=nums2.size()) return nums1[i+k-1];
+        //至此，两个数组都有效
+        if(k==1) return min(nums1[i], nums2[j]); //边界到了
+
+        // 比较滑轮1滑动k/2和滑轮2滑动k/2的距离
+        int midVal1 = (i + k / 2 - 1 < nums1.size()) ? nums1[i + k / 2 - 1] : INT_MAX;
+        int midVal2 = (j + k / 2 - 1 < nums2.size()) ? nums2[j + k / 2 - 1] : INT_MAX;
+
+        // 搞定了k/2，再继续递归 
+        if (midVal1 < midVal2) {
+            return find_kth(nums1, i + k / 2, nums2, j, k - k / 2);
+        } else {
+            return find_kth(nums1, i, nums2, j + k / 2, k - k / 2);
+        }
+    }
+};
