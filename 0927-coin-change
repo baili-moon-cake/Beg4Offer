@@ -1,31 +1,16 @@
-/*
-转：resize()，设置大小（size）;
-reserve()，设置容量（capacity）;
-size()是分配容器的内存大小，而capacity()只是设置容器容量大小，但并没有真正分配内存。
-*/
+//dp[i]表示金额为i时候需要的最小钱币数量
 
 class Solution {
 public:
-    vector<int> count;
-    int dp(vector<int>& coins, int rem){
-        if(rem<0) return -1;
-        if(rem==0) return 0;
-        if(count[rem-1]!=0){ // 被计算过
-            return count[rem-1];
-        }
-        int min = INT_MAX;
-        for(int coin : coins){
-            int res = dp(coins, rem-coin);
-            if(res >= 0 && res < min){ // >=0才会更新
-                min = res;
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> dp(amount+1, amount+1); //设置最大值
+        dp[0]=0;
+        for(int i=1; i<=amount;i++){
+            for(int j=0; j<coins.size(); j++){
+                if(i-coins[j]>=0) dp[i] = min(dp[i], dp[i-coins[j]]+1);
             }
         }
-        count[rem-1]= min==INT_MAX ? -1 : min+1;
-        return count[rem-1];
-    }
-    int coinChange(vector<int>& coins, int amount) {
-        if (amount < 1) return 0;
-        count.resize(amount);
-        return dp(coins, amount);
+        //有可能没有解，此时dp[amount]应该不变，为原来的最大值
+        return dp[amount]==(amount+1)?-1:dp[amount];
     }
 };
