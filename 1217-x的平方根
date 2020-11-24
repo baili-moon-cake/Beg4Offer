@@ -4,8 +4,8 @@ public:
         if(x==0) return 0;
         int left = 1;
         int right = x;
-        while(right-left>1){ // ==1时会陷入死循环，因为mid会往左偏
-            int mid = left + (right - left) / 2;
+        while(left<right-1){ //这里左右逼近的是两个不同的值，[i,i+1]这样
+            int mid = left + (right - left) / 2; 
             if(x/mid < mid){
                 right=mid;
             }
