@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> res;
+        dfs(res, n, n, "");
+        return res;
+    }
+    //left-right分别表示左、右括号剩余的次数
+    void dfs(vector<string>& res, int left, int right, string cur){
+        if(left==0 && right==0){
+            res.push_back(cur);
+            return;
+        }
+        if(left>0){//如果左括号还剩余的话，可以拼接左括号
+            dfs(res, left-1, right, cur+"(");
+        }
+        if(right>left){
+            dfs(res, left, right-1, cur+")");
+        }
+    }
+};
