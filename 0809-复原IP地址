@@ -8,8 +8,8 @@ public:
         return res;
     }
     void helper(int n,int pointnum,int lastpoint,string& cur,string& s) {
-        //pointnum记录目前加了几个点了，lastpoint记录上一个点加的位置
-        if (pointnum == 3) {
+        //pointnum记录目前加了几个点了，lastpoint记录上一个点加的位置，点加在第i个数字后面，也算在第i个位置
+        if (pointnum == 3) {
         //如果已经加了三个点了，并且最后一个点的右边表示的数小于255，则是正确IP地址
             if (valid(lastpoint + 1,n-1,s)){
                 res.push_back(cur);
