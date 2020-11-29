@@ -1,0 +1,25 @@
+// 由于我们要枚举的数 x 一定是在数组中不存在前驱数 x-1 的，
+// 不然按照上面的分析我们会从 x-1 开始尝试匹配，
+// 因此我们每次在哈希表中检查是否存在 x-1 即能判断是否需要跳过了。
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> s;
+        for(int num : nums){
+            s.insert(num);
+        }
+        int res = 0;
+        for(int num : s){
+            if(s.find(num-1)==s.end()){ //找到num-1了，表示已经算过了，舍弃，跳过
+                int curr_num = num+1;
+                int curr_len = 1;
+                while(s.find(curr_num++)!=s.end()){
+                    curr_len++;
+                }
+                res = max(res, curr_len);
+            }
+        }
+        return res;
+    }
+};
