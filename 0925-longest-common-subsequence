@@ -17,3 +17,34 @@ public:
         return dp[n1][n2]; // 前n1个和前n2个的结果
     }
 };
+
+//另外一种思路，构造(n1,n2)大小的dp，但是边界写起来就很麻烦
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        int n1 = text1.size();
+        int n2 = text2.size();
+        vector<vector<int>> dp(n1, vector<int>(n2, 0)); //以下标为i j截止的两个序列的lcs
+        for(int i = 0; i < n1; i++){
+            for(int j = 0; j < n2; j++){
+                if(i==0 && j==0){
+                    if(text1[i]==text2[j]) dp[i][j]=1;
+                    else dp[i][j]=0;
+                }
+                if(i==0 && j!=0){
+                    if(text1[i]==text2[j]) dp[i][j]=1;
+                    else dp[i][j]=dp[i][j-1];
+                }
+                if(i!=0 && j==0){
+                    if(text1[i]==text2[j]) dp[i][j]=1;
+                    else dp[i][j]=dp[i-1][j];
+                }
+                if(i!=0 && j!=0){
+                    if(text1[i] == text2[j]) dp[i][j] = dp[i-1][j-1]+1;
+                    else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        return dp[n1-1][n2-1];
+    }
+};
