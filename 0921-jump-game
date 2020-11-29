@@ -12,7 +12,7 @@ public:
         int energy = nums[0];
         int i;
         for(i = 1; i < nums.size(); i++){
-            if(energy<=0) break;
+            if(energy<=0) break; //没有能量跳到当前i这个位置
             energy--;
             if(energy<nums[i]) energy=nums[i];
             
