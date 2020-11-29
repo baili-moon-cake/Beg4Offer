@@ -1,0 +1,32 @@
+class Solution {
+private:
+	vector<int> Elements;
+public:
+    Solution(vector<int>& nums) {
+        Elements = nums;
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {
+        return Elements;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    //思路是在前n-1张牌洗好的情况下，第n张牌随机与前n-1张牌的其中一张牌交换，或者不换
+    //这里可以把第n张也算在里面，都要换
+    vector<int> shuffle() {
+		vector<int> vShuffle = Elements;
+		for (int i = 1; i < vShuffle.size(); ++i) {
+			int r = rand() % (i + 1); //均匀落在0到i之间
+			swap(vShuffle[r], vShuffle[i]);
+		}
+		return vShuffle;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */
