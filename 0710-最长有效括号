@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        stack<int> st;
+        vector<bool> mark(s.size(), 0);
+
+        for(int i = 0; i < s.length(); i++) {
+            if(s[i] == '(') st.push(i);
+            else {
+                // 多余的右括号是不需要的，标记
+                if(st.empty()) mark[i] = 1;
+                else st.pop();
+            }
+        }
+        // 剩下的左括号是不需要的，标记
+        while(!st.empty()) {
+            mark[st.top()] = 1;
+            st.pop();
+        }
+        // 寻找0区域的最大长度
+        int left = 0, len = 0, res = 0;
+        for(int i = 0; i < s.length(); i++) {
+            if(mark[i]) {
+                len = 0;
+                continue;
+            }
+            len++;
+            res = max(res, len);
+        }
+        return res;
+    }
+};
