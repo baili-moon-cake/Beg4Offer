@@ -1,0 +1,29 @@
+/*
+根据上面画树形图的经验，如果 target 减去一个数得到负数，那么减去一个更大的树依然是负数，同样搜索不到结果。
+基于这个想法，我们可以对输入数组进行排序，添加相关逻辑达到进一步剪枝的目的；
+排序是为了提高搜索速度，对于解决这个问题来说非必要。但是搜索问题一般复杂度较高，能剪枝就尽量剪枝。
+*/
+class Solution {
+public:
+    void dfs(vector<int>& candidates, int target, vector<vector<int>>& res, vector<int>& combine, int idx) {
+        if (target < 0 || idx == candidates.size()) return;
+        if (target == 0) {
+            res.push_back(combine);
+            return;
+        }
+        for(int i=idx;i<candidates.size();i++) {
+            if(candidates[i]>target)// 后面全是大于target的，直接跳出
+                break;
+            combine.push_back(candidates[i]);
+            dfs(candidates, target-candidates[i], res, combine, i);
+            combine.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> res;
+        vector<int> combine;
+        dfs(candidates, target, res, combine, 0);
+        return res;
+    }
+};
