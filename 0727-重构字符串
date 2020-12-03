@@ -1,0 +1,42 @@
+/*
+给定一个字符串S，检查是否能重新排布其中的字母，使得两相邻的字符不同
+
+分为如下三步：
+
+用map统计频率字符频率
+转为vector（即数组）按频率从大到小排序
+按奇数位顺序插入，插满之后按偶数位顺序插入
+为什么要先按奇数位插入呢？
+
+先按奇数位插入，保证最大的字符分散开，因为奇数位总是>=偶数位！
+*/
+class Solution {
+public:
+    bool static cmp (const pair<int, int>& a, const pair<int, int>& b) {
+        return a.second > b.second; // 按照频率从大到小排序
+    }
+
+    string reorganizeString(string S) {
+        unordered_map<char, int> umap;
+        int maxFreq = 0;
+        for (char s : S) {
+            umap[s]++;
+            maxFreq = max(umap[s], maxFreq);
+        }
+        if (2 * maxFreq - 1 > S.size()) return "";
+
+        vector<pair<int, int>> vec(umap.begin(), umap.end());
+        sort(vec.begin(), vec.end(), cmp); // 给频率排个序
+
+        string result(S);
+        int index = 0;// 先按奇数位散开
+        for (int i = 0; i < vec.size(); i++) {
+            while (vec[i].second--) {
+                result[index] = vec[i].first;
+                index += 2;
+                if (index >= S.size()) index = 1; // 奇数位插满了插偶数位
+            }
+        }
+        return result;
+    }
+};
