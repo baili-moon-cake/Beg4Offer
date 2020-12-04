@@ -15,3 +15,20 @@ public:
         return *max_element(dp.begin(), dp.end());
     }
 };
+
+精简版
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        //vector<int> dp(nums.size(), 0); //以下标为i结尾的最大数组和
+        int dp=0;
+        int res=INT_MIN;
+        for(int i=0;i<nums.size();i++){
+            dp=max(dp+nums[i], nums[i]);
+            res=max(res,dp);
+        }
+        return res;
+    }
+};
