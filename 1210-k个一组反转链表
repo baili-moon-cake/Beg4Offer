@@ -12,31 +12,34 @@ class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
         if(!head) return nullptr;
-        ListNode* dummy = new ListNode(0);
-        dummy->next = head;
 
-        ListNode* pre = dummy;
-        ListNode* cur = head;
-        ListNode* nex = cur->next;
-        
+        ListNode* cur = head;        
         int length = 0;
         while(cur){
             length++;
             cur=cur->next;
         }
-        ListNode* start = dummy, *end = head;
-        cur = head;
+
         for(int i=0; i<length/k; i++){ //第i组
-            for(int j=0; j<k; j++){ //重复
-                nex = cur->next;
-                cur->next = pre;
-                pre=cur;
-                cur=nex;
-            }
-            start->next = pre;
-            end->next=cur;
-            start=end;
-            end=start->next;
+            head = reverseBetween(head, i*k+1, (i+1)*k);
+        }
+        return head;
+    }
+
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        ListNode* dummy = new ListNode(0);
+        dummy->next=head;
+        ListNode* pre = dummy;
+        ListNode* cur = head;
+        for(int i=1; i<m; i++){
+            pre=pre->next;
+        }
+        cur=pre->next;
+        for(int i=m; i<n; i++){
+            ListNode* nex=cur->next; //把这个nex移到前面去
+            cur->next = nex->next;
+            nex->next=pre->next;
+            pre->next=nex; //pre永远保持不变
         }
         return dummy->next;
     }
