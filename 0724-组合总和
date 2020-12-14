@@ -6,7 +6,7 @@
 class Solution {
 public:
     void dfs(vector<int>& candidates, int target, vector<vector<int>>& res, vector<int>& combine, int idx) {
-        if (target < 0 || idx == candidates.size()) return;
+        if(target < 0) return; //有没有都行，因为循环已经跳过了
         if (target == 0) {
             res.push_back(combine);
             return;
@@ -15,7 +15,7 @@ public:
             if(candidates[i]>target)// 后面全是大于target的，直接跳出
                 break;
             combine.push_back(candidates[i]);
-            dfs(candidates, target-candidates[i], res, combine, i);
+            dfs(candidates, target-candidates[i], res, combine, i); //可以重复，不用i+1
             combine.pop_back();
         }
     }
