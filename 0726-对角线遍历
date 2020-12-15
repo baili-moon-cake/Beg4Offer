@@ -5,8 +5,8 @@ public:
         if(matrix.empty()) return res;
         int m=matrix.size();
         int n=matrix[0].size();
-        int i=0; //横纵坐标的和，依次递增，最高就是m+n-1
-        while(i<m+n){
+        int i=0; //横纵坐标的和，依次递增，最高就是m+n-2
+        while(i<m+n-1){
             //第1,3,5次，行递减，列递增
             int r= i<m ? i : m-1; //行尽量取最大值
             int c=i-r;
@@ -17,7 +17,7 @@ public:
             }
             i++; //反过来
             
-            if(i>=m+n) break;
+            if(i>=m+n-1) break;
             
             c= i<n ? i : n-1; //列尽量取最大值
             r=i-c;
