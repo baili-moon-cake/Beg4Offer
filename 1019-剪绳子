@@ -27,7 +27,7 @@ public:
         vector<int> dp(n+1); //dp[n]为最终解
         dp[1] = 1;
         dp[2] = 2;
-        dp[3] = 3;
+        dp[3] = 3; //这里不再是n-1因为可以不切了
         for(int i = 4;i<=n;i++){ //分成两段，遍历一遍
             int max_value = 0;
             for(int j=1; j<=i/2; j++){//最低切出来1
