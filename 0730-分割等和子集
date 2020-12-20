@@ -19,11 +19,8 @@ public:
         // 再填表格后面几行
         for (int i = 1; i < len; i++) {
             for (int j = 0; j <= target; j++) {
-                if (nums[i] == j) {
-                    dp[i][j] = true;
-                    continue;
-                }
-                if (nums[i] < j) {
+                if (nums[i] == j) dp[i][j] = true;
+                else if (nums[i] < j) {
                     dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
                 }
                 //nums[i] > j 直接跳过了，不可能有解
