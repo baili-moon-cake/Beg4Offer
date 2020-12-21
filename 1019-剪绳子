@@ -29,13 +29,10 @@ public:
         dp[2] = 2;
         dp[3] = 3; //这里不再是n-1因为可以不切了
         for(int i = 4;i<=n;i++){ //分成两段，遍历一遍
-            int max_value = 0;
             for(int j=1; j<=i/2; j++){//最低切出来1
-                max_value = max(max_value, dp[j]*dp[i-j]);
+                dp[i] = max(dp[i], dp[j]*dp[i-j]);
             }
-            dp[i] = max_value;
         }
         return dp[n];
-
     }
 };
