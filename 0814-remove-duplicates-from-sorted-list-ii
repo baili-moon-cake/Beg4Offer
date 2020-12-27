@@ -16,7 +16,7 @@ public:
         ListNode* L = head;
         ListNode* R = head;
 
-        while(L->next){
+        while(L){
             while(R->next && R->next->val == L->val){
                 R=R->next;
             }
@@ -26,21 +26,11 @@ public:
                 R=R->next;
             }
             else{
-                if(!R->next) {
-                    pre->next = NULL;
-                    return start->next;
-                }
-                else{
-                    pre->next=R->next;
-                    L=pre->next;
-                    R=pre->next;
-                }
+                pre->next=R->next;
+                L=pre->next;
+                R=pre->next;
             }
-            
-
         }
-
         return start->next;
-
     }
 };
