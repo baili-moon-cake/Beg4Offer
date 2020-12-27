@@ -11,17 +11,19 @@
 class Solution {
 public:
     ListNode* reverse(ListNode* head){
-        if(!head) return NULL;
-        ListNode* pre = NULL;
-        ListNode* curr = head;
-        while(curr){
-            ListNode* temp = curr->next;
-            curr->next = pre;
-            pre=curr;
-            curr=temp;
+        if(!head || !head->next) return head;
+        ListNode* dummy = new ListNode(0);
+        dummy->next=head;
+        ListNode* cur = head;
+        while(cur && cur->next){
+            ListNode* right = cur->next;
+            cur->next = right->next;
+            right->next=dummy->next;
+            dummy->next=right;
         }
-        return pre;
+        return dummy->next;
     }
+    
     void reorderList(ListNode* head) {
         if(!head || !head->next || !head->next->next) return;
         ListNode* p = head;
