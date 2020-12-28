@@ -13,3 +13,24 @@ public:
         return res;
     }
 };
+
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char, int> m; //出现次数
+        int res=0, left=0, right=0;
+        while(right<s.size()){
+            if(m.find(s[right])==m.end() || m[s[right]]==0){
+                m[s[right]]=1;
+                right++;
+            }
+            else{
+                m[s[left]]=0;
+                left++;
+            }
+            res=max(res, right-left); //每个都要更新最大长度
+        }
+        return res;
+    }
+};
