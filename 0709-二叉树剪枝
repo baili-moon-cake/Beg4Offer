@@ -15,6 +15,7 @@ public:
         if(!root) return nullptr;
         root->left=pruneTree(root->left);
         root->right=pruneTree(root->right);
+        //要放在后面，类似于后续遍历，从低往上剪，如果放在上面，就先判断过了，这时候下面修剪完毕，这个节点就没法再删除了
         if(!root->left && !root->right && root->val==0) return nullptr;
         return root;
     }
