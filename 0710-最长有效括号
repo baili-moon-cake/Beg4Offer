@@ -18,7 +18,7 @@ public:
             st.pop();
         }
         // 寻找0区域的最大长度
-        int left = 0, len = 0, res = 0;
+        int len = 0, res = 0;
         for(int i = 0; i < s.length(); i++) {
             if(mark[i]) {
                 len = 0;
