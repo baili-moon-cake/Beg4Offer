@@ -31,7 +31,7 @@ public:
 
         int maxDis = nums[0]; //能够走到的最远下标位置
 
-        for (int i = 1; i < len - 1; i++) {
+        for (int i = 1; i < len; i++) {
             if (i <= maxDis) {
                 maxDis = max(maxDis, nums[i]+i);
             }
