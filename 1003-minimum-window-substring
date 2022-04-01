@@ -4,9 +4,9 @@ public:
         unordered_map<char, int> count; //记录没有被包进来的漏网之鱼
         for(auto c : t) count[c]++;
         int len = 0, min_len = s.size();
-        int left = 0, right = 0;
+        int left = 0;
         string res = "";
-        for(; right<s.size(); right++){
+        for(int right = 0; right<s.size(); right++){
             count[s[right]]--;
             if(count[s[right]]>=0) len++; //被减掉还>=0，说明该char在t中出现，覆盖长度+1
             //不满足while条件，就继续往右移动
