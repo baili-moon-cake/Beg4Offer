@@ -1,7 +1,7 @@
 class Solution {
 public:
     int movingCount(int m, int n, int k) {
-        vector<vector<bool>> visited(100, vector<bool> (100, false));
+        vector<vector<bool>> visited(m, vector<bool> (n, false));
         return helper(m,n,0,0,k, visited);
     }
     int helper(int m, int n, int i, int j, int k, vector<vector<bool>>& visited){ // i,j起点的解
