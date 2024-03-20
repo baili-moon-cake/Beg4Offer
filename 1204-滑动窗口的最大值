@@ -2,38 +2,29 @@
 
 class Solution {
 public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        //判断特殊情况
-        vector<int> res;
-        int n = nums.size();
-        if(n < k || k <= 0) return res;
 
-        //滑动窗口的前后指针
-        int low =  1 - k,high = 0;
-        deque<int> dq;//双端队列
-        while(high < n){ //右边没顶到头
-            //每次开始循环的low 和 high都是新的滑窗
-            //判断滑窗的low端是否是最大的元素，是的话就过期了，弹出
-            if(low >= 1 && nums[low - 1] == dq[0]) dq.pop_front();
-
-            while(!dq.empty() && dq[dq.size()-1] < nums[high]) dq.pop_back();//小于nums[high]的元素出队，因为之前那些被新来的干掉了。从后往前就行，因为队列是递减的
-
-            //此时的high指针进队
-            dq.push_back(nums[high]); //继续贴进去，因为每个都可能成为后续滑窗的最大值
-
-            if(low >= 0) res.push_back(dq[0]);//当low >= 0，滑窗已经形成
-            low ++;
-            high ++;
+    vector<int> slipwindow(vector<int>& data, int k){    
+        vector<int> ret;
+        if (data.size() == 0) return ret;     
+        
+        deque<int> q;    
+        for (int i = 0; i < data.size(); i++)    
+        {        
+            while (!q.empty() && data[q.back()] < data[i])
+            {            
+                q.pop_back();        
+            }        
+            q.push_back(i);        
+            if (k == i - q.front())        
+            {            
+                q.pop_front();
+            }        
+            if (i >= k - 1)
+            {            
+                ret.push_back(data[q.front()]);
+            }     
         }
-        return res;
+        return ret;
     }
+
 };
-
-
-// 还可以延伸到“队列的最大值”
-/*
-如果新的value大于deque尾端的值，那么deque一直进行pop_back操作，直到尾端的值大于等于value 或者为空
-再将value压入deque的尾部
-每次取max_value，返回deque首部的值
-当que进行pop操作时，如果que首部的值等于deque首部的值，那么deque同样需要进行pop_front操作
-*/
