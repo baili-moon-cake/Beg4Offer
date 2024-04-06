@@ -11,3 +11,17 @@ public:
         return  n < 0 ? 1 / res : res;
     }
 };
+
+
+
+//非递归快速幂
+int qpow(int a, int n){
+    int ans = 1;
+    while(n){
+        if(n&1)        //如果n的当前末位为1
+            ans *= a;  //ans乘上当前的a
+        a *= a;        //a自乘
+        n >>= 1;       //n往右移一位
+    }
+    return ans;
+}
